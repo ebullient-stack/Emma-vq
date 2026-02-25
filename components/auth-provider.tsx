@@ -39,18 +39,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setSession(session)
       setUser(session?.user ?? null)
       setLoading(false)
-    })
-
-    // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-      setUser(session?.user ?? null)
+    }).catch((error) => {
+      console.warn("Failed to get session:", error)
       setLoading(false)
     })
 
-    return () => subscription.unsubscribe()
+    // Listen for auth changes
+    try {
+      const {
+        data: { subscription },
+      } = supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session)
+        setUser(session?.user ?? null)
+        setLoading(false)
+      })
+
+      return () => subscription?.unsubscribe()
+    } catch (error) {
+      console.warn("Failed to setup auth listener:", error)
+      return () => {}
+    }
   }, [])
 
   const signOut = async () => {
