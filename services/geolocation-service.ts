@@ -1,5 +1,3 @@
-"use client"
-
 interface LocationData {
   country: string
   countryName: string

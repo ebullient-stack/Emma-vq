@@ -150,30 +150,29 @@ export function UserPreferencesProvider({ children }: { children: ReactNode }) {
 
   // Load preferences from localStorage on mount
   useEffect(() => {
-    try {
-      const storedCurrency = localStorage.getItem("userCurrency")
-      const storedLocation = localStorage.getItem("userLocation")
-      const storedMarketPriceUpdateFrequency = localStorage.getItem("marketPriceUpdateFrequency")
+    const loadPreferences = async () => {
+      try {
+        const storedCurrency = localStorage.getItem("userCurrency")
+        const storedLocation = localStorage.getItem("userLocation")
+        const storedMarketPriceUpdateFrequency = localStorage.getItem("marketPriceUpdateFrequency")
 
-      if (storedCurrency) {
-        setCurrencyState(JSON.parse(storedCurrency))
-      }
+        if (storedCurrency) {
+          setCurrencyState(JSON.parse(storedCurrency))
+        }
 
-      if (storedLocation) {
-        setLocationState(JSON.parse(storedLocation))
-      }
+        if (storedLocation) {
+          setLocationState(JSON.parse(storedLocation))
+        }
 
-      if (storedMarketPriceUpdateFrequency) {
-        setMarketPriceUpdateFrequencyState(JSON.parse(storedMarketPriceUpdateFrequency))
+        if (storedMarketPriceUpdateFrequency) {
+          setMarketPriceUpdateFrequencyState(JSON.parse(storedMarketPriceUpdateFrequency))
+        }
+      } catch (error) {
+        console.error("Error loading preferences from localStorage:", error)
       }
-
-      // Auto-detect if no stored preferences
-      if (!storedLocation || !storedCurrency) {
-        autoDetectLocationAndCurrency()
-      }
-    } catch (error) {
-      console.error("Error loading preferences from localStorage:", error)
     }
+
+    loadPreferences()
   }, [])
 
   const setCurrency = (newCurrency: Currency) => {
