@@ -1,53 +1,69 @@
-import Image from "next/image"
+'use client'
+
+import { NavigationHeader } from '@/components/navigation-header'
+import { Footer } from '@/components/footer'
 
 export default function AboutPage() {
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-center">About Asteric</h1>
+    <>
+      <NavigationHeader />
+      <main className="min-h-screen bg-background">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Mission Section */}
+          <section className="mb-12">
+            <h2 className="text-3xl font-bold text-foreground mb-4">Our Mission</h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              At FarmTridge, we're on a mission to make global trade easier by bringing together buyers and suppliers of food and agricultural products from around the world. We provide market intelligence, sourcing solutions, and fulfillment services to help businesses trade with confidence.
+            </p>
+          </section>
 
-        <div className="mb-12">
-          <Image
-            src="/placeholder.svg?height=400&width=800"
-            alt="Tridge team"
-            width={800}
-            height={400}
-            className="rounded-lg w-full"
-          />
+          {/* Story Section */}
+          <section className="mb-12">
+            <h2 className="text-3xl font-bold text-foreground mb-4">Our Story</h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Founded in 2015, FarmTridge began as a market intelligence platform for the food and agriculture industry. Over the years, we've evolved into a comprehensive sourcing platform that connects buyers and suppliers across the globe, facilitating thousands of transactions annually.
+            </p>
+          </section>
+
+          {/* Values Section */}
+          <section className="mb-12">
+            <h2 className="text-3xl font-bold text-foreground mb-6">Our Values</h2>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3">
+                <span className="text-primary font-bold text-lg">•</span>
+                <span className="text-muted-foreground">
+                  <span className="font-semibold text-foreground">Transparency in global trade</span> - We believe in open, honest, and fair trading practices
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-primary font-bold text-lg">•</span>
+                <span className="text-muted-foreground">
+                  <span className="font-semibold text-foreground">Reliability in sourcing and fulfillment</span> - We ensure our partners can count on us
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-primary font-bold text-lg">•</span>
+                <span className="text-muted-foreground">
+                  <span className="font-semibold text-foreground">Innovation in market intelligence</span> - We leverage data to provide actionable insights
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-primary font-bold text-lg">•</span>
+                <span className="text-muted-foreground">
+                  <span className="font-semibold text-foreground">Sustainability in agricultural practices</span> - We support responsible farming
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-primary font-bold text-lg">•</span>
+                <span className="text-muted-foreground">
+                  <span className="font-semibold text-foreground">Collaboration with global partners</span> - We believe in the power of partnerships
+                </span>
+              </li>
+            </ul>
+          </section>
         </div>
-
-        <div className="prose max-w-none">
-          <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
-          <p className="mb-6">
-            At Asteric, we're on a mission to make global trade easier by bringing together buyers and suppliers of food
-            and agricultural products from around the world. We provide market intelligence, sourcing solutions, and
-            fulfillment services to help businesses trade with confidence.
-          </p>
-
-          <h2 className="text-2xl font-semibold mb-4">Our Story</h2>
-          <p className="mb-6">
-            Founded in 2015, Asteric began as a market intelligence platform for the food and agriculture industry. Over
-            the years, we've evolved into a comprehensive sourcing platform that connects buyers and suppliers across
-            the globe, facilitating thousands of transactions annually.
-          </p>
-
-          <h2 className="text-2xl font-semibold mb-4">Our Values</h2>
-          <ul className="list-disc pl-6 mb-6">
-            <li className="mb-2">Transparency in global trade</li>
-            <li className="mb-2">Reliability in sourcing and fulfillment</li>
-            <li className="mb-2">Innovation in market intelligence</li>
-            <li className="mb-2">Sustainability in agricultural practices</li>
-            <li className="mb-2">Collaboration with global partners</li>
-          </ul>
-
-          <h2 className="text-2xl font-semibold mb-4">Global Presence</h2>
-          <p className="mb-6">
-            With offices in Kampala, Uganda,  Asteric
-            has established a truly global presence. Our team of experts works tirelessly to ensure that our platform
-            delivers value to businesses of all sizes.
-          </p>
-        </div>
-      </div>
-    </div>
+      </main>
+      <Footer />
+    </>
   )
 }

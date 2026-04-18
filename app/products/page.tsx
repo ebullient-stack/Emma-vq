@@ -1,349 +1,164 @@
-"use client"
+'use client'
 
-import type React from "react"
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { NavigationHeader } from '@/components/navigation-header'
+import { Footer } from '@/components/footer'
+import { Button } from '@/components/ui/button'
+import { Search, Filter, ChevronLeft, ChevronRight } from 'lucide-react'
 
-import { useState, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Slider } from "@/components/ui/slider"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Skeleton } from "@/components/ui/skeleton"
-import { useProducts, useCategories, useOrigins, usePriceRange } from "@/hooks/use-products"
-import { ProductCard } from "@/components/product-card"
-import { useUserPreferences } from "@/contexts/user-preferences-context"
-import { Search, Filter, ChevronLeft, ChevronRight } from "lucide-react"
+const products = [
+  { id: 1, name: 'Fresh Apples', country: 'United States', price: 0, supplier: 'Fresh Produce Co.', supplierId: 'fresh-produce' },
+  { id: 2, name: 'Organic Avocados', country: 'Mexico', price: 0, supplier: 'Tropical Exports', supplierId: 'tropical-exports' },
+  { id: 3, name: 'Arabica Coffee Beans', country: 'Colombia', price: 0, supplier: 'Colombian Roasts', supplierId: 'colombian-roasts' },
+  { id: 4, name: 'Basmati Rice', country: 'India', price: 0, supplier: 'Happy Farms India', supplierId: 'happy-farms' },
+  { id: 5, name: 'Frozen Shrimp', country: 'Vietnam', price: 0, supplier: 'SeaFood Asia', supplierId: 'seafood-asia' },
+  { id: 6, name: 'Cashew Nuts', country: 'Brazil', price: 0, supplier: 'Nut Traders', supplierId: 'nut-traders' },
+  { id: 7, name: 'John Deere 8R Tractor', country: 'Germany', price: 0, supplier: 'FarmTech Solutions', supplierId: 'farmtech' },
+  { id: 8, name: 'Irrigation System', country: 'Israel', price: 0, supplier: 'Water Solutions', supplierId: 'water-solutions' },
+  { id: 9, name: 'Pruning Shears Set', country: 'Switzerland', price: 0, supplier: 'Tool Manufacturers', supplierId: 'tool-mfg' },
+  { id: 10, name: 'Tractor Spare Parts Kit', country: 'United States', price: 0, supplier: 'Parts Direct', supplierId: 'parts-direct' },
+  { id: 11, name: 'Holstein Dairy Cows', country: 'Netherlands', price: 0, supplier: 'Livestock Genetics', supplierId: 'livestock-genetics' },
+  { id: 12, name: 'Angus Beef Cattle', country: 'United States', price: 0, supplier: 'Beef Breeders Inc', supplierId: 'beef-breeders' },
+  { id: 13, name: 'Merino Sheep', country: 'Australia', price: 0, supplier: 'Wool Producers', supplierId: 'wool-producers' },
+  { id: 14, name: 'Duroc Breeding Pigs', country: 'Denmark', price: 0, supplier: 'Pork Genetics', supplierId: 'pork-genetics' },
+  { id: 15, name: 'Leghorn Laying Hens', country: 'Italy', price: 0, supplier: 'Poultry Farms', supplierId: 'poultry-farms' },
+  { id: 16, name: 'Nubian Dairy Goats', country: 'France', price: 0, supplier: 'Goat Breeders', supplierId: 'goat-breeders' },
+  { id: 17, name: 'Agricultural Land - 50 Hectares', country: 'Ukraine', price: 0, supplier: 'Land Holdings', supplierId: 'land-holdings' },
+  { id: 18, name: 'Vineyard Estate', country: 'France', price: 0, supplier: 'Vineyard Management', supplierId: 'vineyard-mgmt' },
+  { id: 19, name: 'Premium NPK Fertilizer', country: 'Germany', price: 0, supplier: 'Agro Chemicals', supplierId: 'agro-chemicals' },
+  { id: 20, name: 'Organic Seeds Collection', country: 'Netherlands', price: 0, supplier: 'Seed Specialists', supplierId: 'seed-specialists' },
+]
+
+const itemsPerPage = 4
 
 export default function ProductsPage() {
-  // Get filter options
-  const { categories, isLoading: categoriesLoading } = useCategories()
-  const { origins, isLoading: originsLoading } = useOrigins()
-  const { priceRange, isLoading: priceRangeLoading } = usePriceRange()
-  const { location } = useUserPreferences()
+  const router = useRouter()
+  const [currentPage, setCurrentPage] = useState(1)
+  const [searchTerm, setSearchTerm] = useState('')
 
-  // Local state for filter inputs
-  const [searchInput, setSearchInput] = useState("")
-  const [priceInput, setPriceInput] = useState<[number, number]>([0, 100])
-  const [showMobileFilters, setShowMobileFilters] = useState(false)
+  const filteredProducts = products.filter(p => 
+    p.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 
-  // Initialize products with filters
-  const { data, isLoading, error, filters, updateFilters, nextPage, prevPage } = useProducts({
-    page: 1,
-    limit: 12,
-    sortBy: "newest",
-    origin: location.name, // Default to user's location
-  })
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage)
+  const startIdx = (currentPage - 1) * itemsPerPage
+  const currentProducts = filteredProducts.slice(startIdx, startIdx + itemsPerPage)
 
-  // Update price slider when price range is loaded
-  useEffect(() => {
-    if (priceRange) {
-      setPriceInput([priceRange.min, priceRange.max])
-      updateFilters({
-        minPrice: priceRange.min,
-        maxPrice: priceRange.max,
-      })
-    }
-  }, [priceRange, updateFilters])
-
-  // Handle search submit
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    updateFilters({ search: searchInput })
+  const handleContact = (supplier: string, productName: string) => {
+    router.push(`/contact?supplier=${supplier}&product=${productName.replace(/\s+/g, '-').toLowerCase()}`)
   }
 
-  // Handle price change
-  const handlePriceChange = (value: number[]) => {
-    setPriceInput([value[0], value[1]])
-  }
-
-  // Apply price filter
-  const applyPriceFilter = () => {
-    updateFilters({
-      minPrice: priceInput[0],
-      maxPrice: priceInput[1],
-    })
+  const handleQuote = (supplier: string, productName: string) => {
+    router.push(`/quote?supplier=${supplier}&product=${productName.replace(/\s+/g, '-').toLowerCase()}`)
   }
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">Products</h1>
+    <>
+      <NavigationHeader />
+      <main className="min-h-screen bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Header */}
+          <div className="mb-8">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+              <span>✓ Optimized for speed</span>
+              <span>✓ Cache: 2 items</span>
+            </div>
+            <h1 className="text-4xl font-bold text-foreground mb-2">Agricultural Products</h1>
+            <p className="text-muted-foreground">Discover quality agricultural products from verified suppliers worldwide</p>
+          </div>
 
-      <div className="lg:hidden mb-6">
-        <Button
-          variant="outline"
-          className="w-full flex items-center justify-between"
-          onClick={() => setShowMobileFilters(!showMobileFilters)}
-        >
-          <span className="flex items-center">
-            <Filter className="mr-2 h-4 w-4" />
-            Filters
-          </span>
-          <span>{showMobileFilters ? "Hide" : "Show"}</span>
-        </Button>
-      </div>
-
-      <div className="flex flex-col lg:flex-row gap-6 mb-8">
-        {/* Filters sidebar */}
-        <div className={`w-full lg:w-64 space-y-4 ${showMobileFilters ? "block" : "hidden lg:block"}`}>
-          <div className="p-4 border rounded-lg">
-            <h3 className="font-medium mb-3">Filter Products</h3>
-
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium mb-1 block">Category</label>
-                <Select
-                  value={filters.category}
-                  onValueChange={(value) => updateFilters({ category: value === "all" ? undefined : value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="All Categories" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Categories</SelectItem>
-                    {categoriesLoading ? (
-                      <SelectItem value="loading" disabled>
-                        Loading...
-                      </SelectItem>
-                    ) : (
-                      categories.map((category) => (
-                        <SelectItem key={category} value={category}>
-                          {category}
-                        </SelectItem>
-                      ))
-                    )}
-                  </SelectContent>
-                </Select>
+          {/* Search and Filters */}
+          <div className="mb-8 space-y-4">
+            <div className="flex gap-2">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value)
+                    setCurrentPage(1)
+                  }}
+                  className="w-full pl-10 pr-4 py-2 border border-border rounded-lg bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                />
               </div>
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white">Search</Button>
+            </div>
+            <div className="flex gap-3">
+              <Button variant="outline" className="gap-2">
+                <Filter className="w-4 h-4" />
+                Filters
+              </Button>
+              <select className="px-3 py-2 border border-border rounded-lg bg-card text-foreground text-sm">
+                <option>Newest First</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+              </select>
+            </div>
+          </div>
 
-              <div>
-                <label className="text-sm font-medium mb-1 block">Origin</label>
-                <Select
-                  value={filters.origin}
-                  onValueChange={(value) => updateFilters({ origin: value === "all" ? undefined : value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="All Origins" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Origins</SelectItem>
-                    {originsLoading ? (
-                      <SelectItem value="loading" disabled>
-                        Loading...
-                      </SelectItem>
-                    ) : (
-                      origins.map((origin) => (
-                        <SelectItem key={origin} value={origin}>
-                          {origin}
-                        </SelectItem>
-                      ))
-                    )}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium mb-1 block">Listing Type</label>
-                <Select
-                  value={filters.listingType}
-                  onValueChange={(value) =>
-                    updateFilters({ listingType: value === "all" ? undefined : (value as any) })
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="All Listings" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Listings</SelectItem>
-                    <SelectItem value="sell">For Sale Only</SelectItem>
-                    <SelectItem value="hire">For Hire Only</SelectItem>
-                    <SelectItem value="both">Sale & Hire</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium mb-1 block">Price Range</label>
-                {priceRangeLoading ? (
-                  <Skeleton className="h-10 w-full" />
-                ) : (
-                  <>
-                    <div className="mb-6">
-                      <Slider
-                        value={priceInput}
-                        min={priceRange?.min || 0}
-                        max={priceRange?.max || 100}
-                        step={0.1}
-                        onValueChange={handlePriceChange}
-                      />
-                    </div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span>${priceInput[0].toFixed(2)}</span>
-                      <span>${priceInput[1].toFixed(2)}</span>
-                    </div>
-                    <Button size="sm" className="w-full" onClick={applyPriceFilter}>
-                      Apply Price
+          {/* Products Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {currentProducts.map((product) => (
+              <div key={product.id} className="bg-card rounded-lg border border-border overflow-hidden hover:shadow-lg transition-shadow">
+                <div className="w-full h-40 bg-muted flex items-center justify-center">
+                  <div className="text-muted-foreground">📦</div>
+                </div>
+                <div className="p-4">
+                  <h3 className="font-medium text-foreground mb-2">{product.name}</h3>
+                  <p className="text-sm text-muted-foreground mb-3">{product.country}</p>
+                  <p className="text-lg font-bold text-primary mb-4">US$ {product.price.toFixed(2)}</p>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="flex-1"
+                      onClick={() => handleContact(product.supplierId, product.name)}
+                    >
+                      Contact
                     </Button>
-                  </>
-                )}
+                    <Button 
+                      size="sm" 
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                      onClick={() => handleQuote(product.supplierId, product.name)}
+                    >
+                      Quote
+                    </Button>
+                  </div>
+                </div>
               </div>
-
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="inStock"
-                  checked={filters.inStock === true}
-                  onCheckedChange={(checked) => updateFilters({ inStock: checked ? true : undefined })}
-                />
-                <label
-                  htmlFor="inStock"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  In Stock Only
-                </label>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="featured"
-                  checked={filters.featured === true}
-                  onCheckedChange={(checked) => updateFilters({ featured: checked ? true : undefined })}
-                />
-                <label
-                  htmlFor="featured"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Featured Products
-                </label>
-              </div>
-
-              <Button
-                variant="outline"
-                className="w-full"
-                onClick={() => {
-                  setSearchInput("")
-                  setPriceInput(priceRange ? [priceRange.min, priceRange.max] : [0, 100])
-                  updateFilters({
-                    search: undefined,
-                    category: undefined,
-                    origin: undefined,
-                    minPrice: priceRange?.min,
-                    maxPrice: priceRange?.max,
-                    inStock: undefined,
-                    featured: undefined,
-                    listingType: undefined,
-                  })
-                }}
-              >
-                Reset Filters
-              </Button>
-            </div>
+            ))}
           </div>
-        </div>
 
-        <div className="flex-1">
-          <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <form onSubmit={handleSearchSubmit} className="relative w-full max-w-md">
-              <Input
-                type="search"
-                placeholder="Search products..."
-                className="pr-10"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-              />
-              <Button type="submit" variant="ghost" className="absolute right-0 top-0 h-full px-3">
-                <Search className="h-4 w-4" />
-                <span className="sr-only">Search</span>
-              </Button>
-            </form>
-
-            <Select
-              value={filters.sortBy || "newest"}
-              onValueChange={(value) => updateFilters({ sortBy: value as any })}
+          {/* Pagination */}
+          <div className="flex items-center justify-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
             >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="newest">Newest</SelectItem>
-                <SelectItem value="price-asc">Price: Low to High</SelectItem>
-                <SelectItem value="price-desc">Price: High to Low</SelectItem>
-                <SelectItem value="popular">Most Popular</SelectItem>
-              </SelectContent>
-            </Select>
+              <ChevronLeft className="w-4 h-4" />
+              Previous
+            </Button>
+            <span className="text-sm text-muted-foreground">
+              Page {currentPage} of {totalPages}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              disabled={currentPage === totalPages}
+            >
+              Next
+              <ChevronRight className="w-4 h-4" />
+            </Button>
           </div>
-
-          {isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {Array.from({ length: 8 }).map((_, index) => (
-                <Card key={index} className="h-full">
-                  <CardContent className="p-0">
-                    <Skeleton className="h-48 w-full rounded-t-lg" />
-                    <div className="p-4 space-y-3">
-                      <Skeleton className="h-6 w-3/4" />
-                      <Skeleton className="h-4 w-1/2" />
-                      <div className="flex items-center justify-between">
-                        <Skeleton className="h-5 w-1/3" />
-                        <Skeleton className="h-5 w-1/4" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : error ? (
-            <div className="text-center py-12">
-              <p className="text-red-500 mb-4">Error loading products: {error}</p>
-              <Button onClick={() => updateFilters({})}>Try Again</Button>
-            </div>
-          ) : data && data.products.length > 0 ? (
-            <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {data.products.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-
-              {/* Pagination */}
-              <div className="flex items-center justify-between mt-8">
-                <div className="text-sm text-muted-foreground">
-                  Showing {(data.page - 1) * data.limit + 1} to {Math.min(data.page * data.limit, data.total)} of{" "}
-                  {data.total} products
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={prevPage}
-                    disabled={data.page <= 1}
-                    className="flex items-center"
-                  >
-                    <ChevronLeft className="h-4 w-4 mr-1" />
-                    Previous
-                  </Button>
-                  <span className="text-sm">
-                    Page {data.page} of {data.totalPages}
-                  </span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={nextPage}
-                    disabled={data.page >= data.totalPages}
-                    className="flex items-center"
-                  >
-                    Next
-                    <ChevronRight className="h-4 w-4 ml-1" />
-                  </Button>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-lg mb-4">No products found matching your criteria.</p>
-              <Button onClick={() => updateFilters({})}>Clear Filters</Button>
-            </div>
-          )}
         </div>
-      </div>
-    </div>
+      </main>
+      <Footer />
+    </>
   )
 }

@@ -1,21 +1,30 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import Header from "@/components/header"
-import Footer from "@/components/footer"
-import { Toaster } from "@/components/ui/toaster"
-import { UserPreferencesProvider } from "@/contexts/user-preferences-context"
-import { AutoDetectionHandler } from "@/components/auto-detection-handler"
-import { ThemeProvider } from "@/components/theme-provider"
-import { AuthProvider } from "@/components/auth-provider"
+import type { Metadata } from 'next'
+import { Geist, Geist_Mono } from 'next/font/google'
+import './globals.css'
 
-const inter = Inter({ subsets: ["latin"] })
+const _geist = Geist({ subsets: ["latin"] });
+const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Asteric - Global Agricultural Marketplace",
-  description: "Connect with suppliers and buyers of agricultural products worldwide",
-    generator: 'v0.app'
+  title: 'FarmTridge - Global Agricultural Marketplace',
+  description: 'Connect with farmers and traders worldwide. Buy and sell agricultural products with real-time market intelligence and pricing data.',
+  icons: {
+    icon: [
+      {
+        url: '/icon-light-32x32.png',
+        media: '(prefers-color-scheme: light)',
+      },
+      {
+        url: '/icon-dark-32x32.png',
+        media: '(prefers-color-scheme: dark)',
+      },
+      {
+        url: '/icon.svg',
+        type: 'image/svg+xml',
+      },
+    ],
+    apple: '/apple-icon.png',
+  },
 }
 
 export default function RootLayout({
@@ -25,20 +34,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <AuthProvider>
-            <UserPreferencesProvider>
-              <AutoDetectionHandler />
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-              </div>
-              <Toaster />
-            </UserPreferencesProvider>
-          </AuthProvider>
-        </ThemeProvider>
+      <body className="font-sans antialiased">
+        {children}
       </body>
     </html>
   )
