@@ -23,10 +23,10 @@ const supplierDetails = {
     about:
       'With over 20 years of experience in coffee production and trading, African Coffee Traders is committed to delivering the highest quality coffee beans directly from Uganda’s rich coffee regions. We work with thousands of small-scale farmers across Uganda.',
     products_list: [
-      { name: 'Arabica Coffee Beans', price: '$15.50/kg', rating: 4.9 },
-      { name: 'Robusta Coffee Beans', price: '$12.00/kg', rating: 4.8 },
-      { name: 'Specialty Single Origin', price: '$22.00/kg', rating: 5.0 },
-      { name: 'Organic Fair Trade Coffee', price: '$18.50/kg', rating: 4.9 },
+      { name: 'Arabica Coffee Beans', price: 'UGX 58,000/kg', rating: 4.9 },
+      { name: 'Robusta Coffee Beans', price: 'UGX 44,000/kg', rating: 4.8 },
+      { name: 'Specialty Single Origin', price: 'UGX 81,000/kg', rating: 5.0 },
+      { name: 'Organic Fair Trade Coffee', price: 'UGX 66,000/kg', rating: 4.9 },
     ],
     certifications: ['Fair Trade Certified', 'Organic Certified', 'ISO 9001:2015', 'UTZ Certified'],
   },
@@ -45,10 +45,10 @@ const supplierDetails = {
     about:
       'Global Harvest Co. is a leader in sustainable agriculture in Uganda, providing fresh fruits and vegetables to local and regional markets.',
     products_list: [
-      { name: 'Organic Avocados', price: '$8.50/kg', rating: 4.9 },
-      { name: 'Fresh Strawberries', price: '$6.00/kg', rating: 4.8 },
-      { name: 'Premium Tomatoes', price: '$4.50/kg', rating: 4.7 },
-      { name: 'Organic Lettuce Mix', price: '$3.50/kg', rating: 4.8 },
+      { name: 'Organic Avocados', price: 'UGX 31,000/kg', rating: 4.9 },
+      { name: 'Fresh Strawberries', price: 'UGX 22,000/kg', rating: 4.8 },
+      { name: 'Premium Tomatoes', price: 'UGX 16,000/kg', rating: 4.7 },
+      { name: 'Organic Lettuce Mix', price: 'UGX 12,000/kg', rating: 4.8 },
     ],
     certifications: ['Organic Certified', 'Global GAP Certified', 'ISO 22000:2018', 'Rainforest Alliance'],
   },
@@ -67,10 +67,10 @@ const supplierDetails = {
     about:
       'Premium Livestock Traders provides superior livestock and breeding animals across Uganda while maintaining high welfare standards.',
     products_list: [
-      { name: 'Grass-Fed Beef', price: '$18.00/kg', rating: 4.9 },
+      { name: 'Grass-Fed Beef', price: 'UGX 68,000/kg', rating: 4.9 },
       { name: 'Premium Dairy Cattle', price: 'Custom Quote', rating: 4.8 },
-      { name: 'Breeding Sheep', price: '$12.00/head', rating: 4.7 },
-      { name: 'Poultry Selection', price: '$5.50/kg', rating: 4.8 },
+      { name: 'Breeding Sheep', price: 'UGX 45,000/head', rating: 4.7 },
+      { name: 'Poultry Selection', price: 'UGX 20,000/kg', rating: 4.8 },
     ],
     certifications: ['Uganda Veterinary Certified', 'ISO 9001:2015', 'Animal Welfare Approved'],
   },
@@ -89,10 +89,10 @@ const supplierDetails = {
     about:
       'Asian Agro Solutions operates in Uganda supplying rice, spices, and agricultural products to local markets.',
     products_list: [
-      { name: 'Jasmine Rice', price: '$0.85/kg', rating: 4.9 },
-      { name: 'Spice Mix Blends', price: '$12.50/kg', rating: 4.8 },
-      { name: 'Premium Turmeric', price: '$8.00/kg', rating: 4.7 },
-      { name: 'Chili Peppers', price: '$6.50/kg', rating: 4.8 },
+      { name: 'Jasmine Rice', price: 'UGX 3,400/kg', rating: 4.9 },
+      { name: 'Spice Mix Blends', price: 'UGX 45,000/kg', rating: 4.8 },
+      { name: 'Premium Turmeric', price: 'UGX 28,000/kg', rating: 4.7 },
+      { name: 'Chili Peppers', price: 'UGX 22,000/kg', rating: 4.8 },
     ],
     certifications: ['Uganda FDA Approved', 'Organic Certified', 'ISO 22000'],
   },
@@ -111,10 +111,10 @@ const supplierDetails = {
     about:
       'FarmTech Solutions provides modern agricultural machinery and tools across Uganda.',
     products_list: [
-      { name: 'Precision Soil Tester', price: '$450.00', rating: 4.9 },
-      { name: 'Automated Irrigation System', price: '$2,500.00', rating: 4.8 },
-      { name: 'Crop Monitoring Drone', price: '$5,000.00', rating: 4.7 },
-      { name: 'Smart Pest Detector', price: '$350.00', rating: 4.8 },
+      { name: 'Precision Soil Tester', price: 'UGX 1,650,000', rating: 4.9 },
+      { name: 'Automated Irrigation System', price: 'UGX 9,250,000', rating: 4.8 },
+      { name: 'Crop Monitoring Drone', price: 'UGX 18,500,000', rating: 4.7 },
+      { name: 'Smart Pest Detector', price: 'UGX 1,300,000', rating: 4.8 },
     ],
     certifications: ['CE Certified', 'ISO 9001:2015', 'AgriTech Innovation Award'],
   },
@@ -153,7 +153,10 @@ export default function SupplierStorePage() {
         {/* Back */}
         <div className="border-b bg-card">
           <div className="max-w-7xl mx-auto px-4 py-4">
-            <Link href="/suppliers" className="flex items-center gap-2 text-primary hover:underline">
+            <Link
+              href="/suppliers"
+              className="flex items-center gap-2 text-primary hover:underline"
+            >
               <ArrowLeft className="w-4 h-4" />
               Back to Suppliers
             </Link>
@@ -172,7 +175,10 @@ export default function SupplierStorePage() {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`w-5 h-5 ${i < Math.floor(supplier.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-white/30'}`}
+                      className={`w-5 h-5 ${i < Math.floor(supplier.rating)
+                          ? 'fill-yellow-400 text-yellow-400'
+                          : 'text-white/30'
+                        }`}
                     />
                   ))}
                   <span>{supplier.rating}/5</span>
@@ -211,6 +217,7 @@ export default function SupplierStorePage() {
                   <Share2 className="w-4 h-4 mr-2" />
                   Share
                 </Button>
+
               </div>
 
             </div>
@@ -248,7 +255,9 @@ export default function SupplierStorePage() {
                         </p>
 
                         <Link
-                          href={`/contact?supplier=${id}&product=${encodeURIComponent(product.name)}`}
+                          href={`/contact?supplier=${id}&product=${encodeURIComponent(
+                            product.name
+                          )}`}
                         >
                           <Button className="w-full bg-blue-600 text-white">
                             Get Quote
