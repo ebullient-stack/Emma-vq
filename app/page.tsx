@@ -1,37 +1,25 @@
-import Hero from "@/components/hero"
-import Features from "@/components/features"
-import ProductCategories from "@/components/product-categories"
-import MarketInsights from "@/components/market-insights"
-import FeaturedVendors from "@/components/featured-vendors"
-import HireCategories from "@/components/hire-categories"
-import CtaSection from "@/components/cta-section"
-import MarketPrices from "@/components/market-prices"
-import DemandedCrops from "@/components/demanded-crops"
-import EastAfricaHighlights from "@/components/east-africa-highlights"
+import { HeroSection } from '@/components/hero-section'
+import { WhyChooseSection } from '@/components/why-choose-section'
+import { ExploreCategoriesSection } from '@/components/explore-categories-section'
+import { MarketIntelligenceSection } from '@/components/market-intelligence-section'
+import { InsightsSection } from '@/components/insights-section'
+import { FeaturedSuppliersSection } from '@/components/featured-suppliers-section'
+import { MarketInsightsSection } from '@/components/market-insights-section'
+import { HireServicesSection } from '@/components/hire-services-section'
+import { Footer } from '@/components/footer'
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Hero />
-      <Features />
-      <ProductCategories />
-
-      {/* Market data section */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Market Intelligence</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <MarketPrices />
-            <DemandedCrops />
-          </div>
-        </div>
-      </section>
-
-      <EastAfricaHighlights />
-      <FeaturedVendors />
-      <MarketInsights />
-      <HireCategories />
-      <CtaSection />
-    </div>
+    <main className="min-h-screen bg-background">
+      <HeroSection />
+      <WhyChooseSection />
+      <ExploreCategoriesSection />
+      <MarketIntelligenceSection />
+      <InsightsSection />
+      <FeaturedSuppliersSection />
+      <MarketInsightsSection />
+      <HireServicesSection />
+      <Footer />
+    </main>
   )
 }

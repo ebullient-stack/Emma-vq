@@ -1,140 +1,109 @@
-import Link from "next/link"
-import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react"
+'use client'
 
-export default function Footer() {
+import { Mail, MapPin, Phone, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react'
+
+export function Footer() {
   return (
-    <footer className="bg-muted">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div>
-            <h3 className="font-bold text-xl mb-4">ASTERIC</h3>
-            <p className="text-muted-foreground mb-4">
-              Connecting global buyers and suppliers in the food and agriculture industry.
-            </p>
-            <div className="flex space-x-4">
-              <Link href="#" className="text-muted-foreground hover:text-foreground">
-                <Facebook className="h-5 w-5" />
-                <span className="sr-only">Facebook</span>
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-foreground">
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-foreground">
-                <Instagram className="h-5 w-5" />
-                <span className="sr-only">Instagram</span>
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-foreground">
-                <Linkedin className="h-5 w-5" />
-                <span className="sr-only">LinkedIn</span>
-              </Link>
+    <footer className="bg-slate-900 text-background">
+      <div className="px-4 sm:px-6 lg:px-8 py-16">
+        <div className="max-w-7xl mx-auto">
+          {/* Footer Content */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-12">
+            {/* Company Info */}
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-10 h-10 bg-green-500 rounded flex items-center justify-center text-white font-bold text-lg">
+                  A
+                </div>
+                <h4 className="font-bold text-lg text-white">FARM TRIDGE</h4>
+              </div>
+              <p className="text-slate-400 text-sm mb-6">
+                Connecting agricultural suppliers and buyers across East Africa and beyond. Your trusted partner in global agricultural trade.
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-slate-400 text-sm">
+                  <Facebook className="h-4 w-4" />
+                </div>
+                <div className="flex items-center gap-2 text-slate-400 text-sm">
+                  <Twitter className="h-4 w-4" />
+                </div>
+                <div className="flex items-center gap-2 text-slate-400 text-sm">
+                  <Linkedin className="h-4 w-4" />
+                </div>
+                <div className="flex items-center gap-2 text-slate-400 text-sm">
+                  <Instagram className="h-4 w-4" />
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h4 className="font-bold text-white mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-slate-400 text-sm">
+                <li><a href="/products" className="hover:text-white transition">Browse Products</a></li>
+                <li><a href="/suppliers" className="hover:text-white transition">Find Suppliers</a></li>
+                <li><a href="/signup/supplier" className="hover:text-white transition">Become a Supplier</a></li>
+                <li><a href="/insights" className="hover:text-white transition">Market Insights</a></li>
+                <li><a href="/hire-categories" className="hover:text-white transition">Hire Services</a></li>
+              </ul>
+            </div>
+
+            {/* Services */}
+            <div>
+              <h4 className="font-bold text-white mb-4">Services</h4>
+              <ul className="space-y-2 text-slate-400 text-sm">
+                <li><a href="/sourcing-solutions-1" className="hover:text-white transition">Sourcing Solutions</a></li>
+                <li><a href="/logistics-1" className="hover:text-white transition">Logistics</a></li>
+                <li><a href="/cross-border-trade-1" className="hover:text-white transition">Cross-border Trade</a></li>
+                <li><a href="/agri-finance-1" className="hover:text-white transition">Agri Finance</a></li>
+                <li><a href="/market-intelligence-1" className="hover:text-white transition">Market Intelligence</a></li>
+              </ul>
+            </div>
+
+            {/* Partners */}
+            <div>
+              <h4 className="font-bold text-white mb-4">Partners</h4>
+              <ul className="space-y-2 text-slate-400 text-sm">
+                <li><a href="/become-partner-1" className="hover:text-white transition">Become a Partner</a></li>
+                <li><a href="/workers" className="hover:text-white transition">Hire Farm Workers</a></li>
+                <li><a href="/signup/worker" className="hover:text-white transition">Register as Worker</a></li>
+                <li><a href="/support" className="hover:text-white transition">Support & Contact</a></li>
+              </ul>
+            </div>
+
+            {/* Contact Us */}
+            <div>
+              <h4 className="font-bold text-white mb-4">Contact Us</h4>
+              <ul className="space-y-3 text-slate-400 text-sm">
+                <li className="flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-green-500" />
+                  <span>info@farmtridge.com</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Phone className="h-4 w-4 text-green-500" />
+                  <span>+256 753 934 803</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <MapPin className="h-4 w-4 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Kampala, Uganda<br />East Africa</span>
+                </li>
+              </ul>
             </div>
           </div>
 
-          <div>
-            <h3 className="font-semibold mb-4">Products</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/products?category=fruits" className="text-muted-foreground hover:text-foreground">
-                  Fruits & Vegetables
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=grains" className="text-muted-foreground hover:text-foreground">
-                  Grains & Cereals
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=coffee" className="text-muted-foreground hover:text-foreground">
-                  Coffee & Tea
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=nuts" className="text-muted-foreground hover:text-foreground">
-                  Nuts & Seeds
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=seafood" className="text-muted-foreground hover:text-foreground">
-                  Seafood
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Legal Footer */}
+          <div className="border-t border-slate-700 pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <div className="text-slate-500 text-sm mb-4 md:mb-0">
+                <p>&copy; 2026 FARM TRIDGE. All rights reserved.</p>
+              </div>
 
-          <div>
-            <h3 className="font-semibold mb-4">Services</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/services/sourcing" className="text-muted-foreground hover:text-foreground">
-                  Sourcing Solutions
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/market-intelligence" className="text-muted-foreground hover:text-foreground">
-                  Market Intelligence
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/fulfillment" className="text-muted-foreground hover:text-foreground">
-                  Fulfillment Services
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/quality-control" className="text-muted-foreground hover:text-foreground">
-                  Quality Control
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-4">Company</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/about" className="text-muted-foreground hover:text-foreground">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-muted-foreground hover:text-foreground">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link href="/careers" className="text-muted-foreground hover:text-foreground">
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="text-muted-foreground hover:text-foreground">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/press" className="text-muted-foreground hover:text-foreground">
-                  Press
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-muted-foreground mb-4 md:mb-0">
-              &copy; {new Date().getFullYear()} Asteric. All rights reserved.
-            </p>
-            <div className="flex space-x-6">
-              <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground">
-                Terms of Service
-              </Link>
-              <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground">
-                Privacy Policy
-              </Link>
-              <Link href="/cookies" className="text-sm text-muted-foreground hover:text-foreground">
-                Cookie Policy
-              </Link>
+              <div className="flex gap-6 text-slate-500 text-sm">
+                <a href="/privacy-policy-1" className="hover:text-white transition">Privacy Policy</a>
+                <a href="/terms" className="hover:text-white transition">Terms</a>
+                <a href="#" className="hover:text-white transition">Accessibility</a>
+                <a href="/support" className="hover:text-white transition">Contact</a>
+              </div>
             </div>
           </div>
         </div>

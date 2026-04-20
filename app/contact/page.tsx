@@ -1,200 +1,219 @@
-"use client"
+'use client'
 
-import type React from "react"
-
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Check, MapPin, Mail, Phone } from "lucide-react"
+import { useState } from 'react'
+import { NavigationHeader } from '@/components/navigation-header'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { MapPin, Mail, Phone } from 'lucide-react'
 
 export default function ContactPage() {
-  const [submitted, setSubmitted] = useState(false)
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    companyName: '',
+    inquiryType: '',
+    message: '',
+  })
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // In a real app, you would send the form data to your server
-    setTimeout(() => {
-      setSubmitted(true)
-    }, 1000)
+    console.log('Contact form submitted:', formData)
   }
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Have questions about our products or services? Get in touch with our team and we'll be happy to assist you.
-          </p>
-        </div>
+    <>
+      <NavigationHeader />
+      <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-foreground mb-4">Contact Us</h1>
+            <p className="text-lg text-muted-foreground">
+              Have questions about our products or services? Get in touch with our team and we'll be happy to assist you.
+            </p>
+          </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-primary" />
-                Visit Us
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm">
-                123 Global Trade Center
-                <br />
-                Kampala, Uganda
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2">
-                <Mail className="h-5 w-5 text-primary" />
-                Email Us
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm">
-                info@asteric.com
-                <br />
-                support@asteric.com
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2">
-                <Phone className="h-5 w-5 text-primary" />
-                Call Us
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm">
-                +256 775096986
-                <br />
-                Mon-Fri, 9:00 AM - 6:00 PM KST
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          <Card className="md:col-span-2">
-            <CardHeader>
-              <CardTitle>Send Us a Message</CardTitle>
-              <CardDescription>
-                Fill out the form below and our team will get back to you as soon as possible.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {submitted ? (
-                <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                    <Check className="h-6 w-6 text-primary" />
+          {/* Contact Info Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {/* Visit Us */}
+            <Card className="border border-border hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6">
+                <div className="flex gap-4">
+                  <div className="p-3 bg-blue-100 rounded-lg h-fit">
+                    <MapPin className="w-6 h-6 text-blue-600" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">Message Sent Successfully!</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Thank you for reaching out. We'll get back to you shortly.
-                  </p>
-                  <Button onClick={() => setSubmitted(false)}>Send Another Message</Button>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Visit Us</h3>
+                    <p className="text-muted-foreground text-sm">
+                      123 Global Trade Center<br />
+                      Kampala, Uganda
+                    </p>
+                  </div>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label htmlFor="firstName" className="text-sm font-medium">
-                        First Name
-                      </label>
-                      <Input id="firstName" aria-describedby="firstName-desc" required />
-                      <div id="firstName-desc" className="sr-only">
-                        Enter your first name
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="lastName" className="text-sm font-medium">
-                        Last Name
-                      </label>
-                      <Input id="lastName" aria-describedby="lastName-desc" required />
-                      <div id="lastName-desc" className="sr-only">
-                        Enter your last name
-                      </div>
-                    </div>
-                  </div>
+              </CardContent>
+            </Card>
 
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="text-sm font-medium">
-                        Email
-                      </label>
-                      <Input id="email" type="email" aria-describedby="email-desc" required />
-                      <div id="email-desc" className="sr-only">
-                        Enter your email address
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="phone" className="text-sm font-medium">
-                        Phone Number
-                      </label>
-                      <Input id="phone" type="tel" aria-describedby="phone-desc" />
-                      <div id="phone-desc" className="sr-only">
-                        Enter your phone number (optional)
-                      </div>
-                    </div>
+            {/* Email Us */}
+            <Card className="border border-border hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6">
+                <div className="flex gap-4">
+                  <div className="p-3 bg-blue-100 rounded-lg h-fit">
+                    <Mail className="w-6 h-6 text-blue-600" />
                   </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="company" className="text-sm font-medium">
-                      Company Name
-                    </label>
-                    <Input id="company" aria-describedby="company-desc" />
-                    <div id="company-desc" className="sr-only">
-                      Enter your company name (optional)
-                    </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Email Us</h3>
+                    <p className="text-muted-foreground text-sm">
+                      info@farmtridge.com<br />
+                      Support@farmtridge.com
+                    </p>
                   </div>
+                </div>
+              </CardContent>
+            </Card>
 
-                  <div className="space-y-2">
-                    <label htmlFor="inquiry" className="text-sm font-medium">
-                      Inquiry Type
-                    </label>
-                    <Select>
-                      <SelectTrigger id="inquiry" aria-describedby="inquiry-desc">
-                        <SelectValue placeholder="Select an inquiry type" />
-                      </SelectTrigger>
-                      <div id="inquiry-desc" className="sr-only">
-                        Select the type of inquiry
-                      </div>
-                      <SelectContent>
-                        <SelectItem value="product">Product Information</SelectItem>
-                        <SelectItem value="sourcing">Sourcing Request</SelectItem>
-                        <SelectItem value="supplier">Supplier Inquiry</SelectItem>
-                        <SelectItem value="partnership">Partnership Opportunity</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
+            {/* Call Us */}
+            <Card className="border border-border hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6">
+                <div className="flex gap-4">
+                  <div className="p-3 bg-blue-100 rounded-lg h-fit">
+                    <Phone className="w-6 h-6 text-blue-600" />
                   </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-medium">
-                      Message
-                    </label>
-                    <Textarea id="message" rows={5} aria-describedby="message-desc" required />
-                    <div id="message-desc" className="sr-only">
-                      Enter your message
-                    </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Call Us</h3>
+                    <p className="text-muted-foreground text-sm">
+                      +256 775096966<br />
+                      Mon-Fri, 9:00 AM - 6:00 PM KST
+                    </p>
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-                  <Button type="submit" className="w-full">
-                    Send Message
-                  </Button>
-                </form>
-              )}
+          {/* Contact Form */}
+          <Card className="border border-border max-w-2xl mx-auto">
+            <CardContent className="pt-8">
+              <h2 className="text-2xl font-bold text-foreground mb-2">Send Us a Message</h2>
+              <p className="text-muted-foreground mb-6">
+                Fill out the form below and our team will get back to you as soon as possible.
+              </p>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Name Fields */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold mb-2">First Name</label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      placeholder="John"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold mb-2">Last Name</label>
+                    <input
+                      type="text"
+                      name="lastName"
+                      placeholder="Doe"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                  </div>
+                </div>
+
+                {/* Email and Phone */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold mb-2">Email</label>
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="john@example.com"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold mb-2">Phone Number</label>
+                    <input
+                      type="tel"
+                      name="phoneNumber"
+                      placeholder="+256 700 000 000"
+                      value={formData.phoneNumber}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                  </div>
+                </div>
+
+                {/* Company Name */}
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Company Name</label>
+                  <input
+                    type="text"
+                    name="companyName"
+                    placeholder="Your company name"
+                    value={formData.companyName}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </div>
+
+                {/* Inquiry Type */}
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Inquiry Type</label>
+                  <select
+                    name="inquiryType"
+                    value={formData.inquiryType}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                  >
+                    <option value="">Select an inquiry type</option>
+                    <option value="General">General Inquiry</option>
+                    <option value="Support">Technical Support</option>
+                    <option value="Partnership">Partnership Opportunity</option>
+                    <option value="Feedback">Feedback</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Message</label>
+                  <textarea
+                    name="message"
+                    placeholder="Your message here..."
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows={5}
+                    className="w-full px-4 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3">
+                  Send Message
+                </Button>
+              </form>
             </CardContent>
           </Card>
         </div>
       </div>
-    </div>
+    </>
   )
 }
