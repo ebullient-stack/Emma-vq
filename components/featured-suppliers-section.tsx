@@ -6,42 +6,42 @@ import Image from 'next/image'
 import { Star, MapPin, Store } from 'lucide-react'
 import Link from 'next/link'
 
-// Supplier data with IDs matching your supplier detail pages
+// Uganda-based supplier data aligned with your system
 const suppliers = [
   {
     id: 'global-harvest',
     name: 'Global Harvest Co.',
-    country: 'United States',
+    country: 'Entebbe, Uganda',
     rating: 4.8,
     reviews: 156,
-    description: 'Leading supplier of premium fruits and vegetables from the United States, with a focus on sustainable farming.',
+    description: 'Leading supplier of premium fruits and vegetables in Uganda, focused on sustainable farming practices.',
     image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
   },
   {
     id: 'tropical-exports',
     name: 'Tropical Exports Ltd.',
-    country: 'Mexico',
+    country: 'Gulu, Uganda',
     rating: 4.6,
     reviews: 89,
-    description: 'Specialized in tropical fruits and organic products from Mexico and Central America.',
+    description: 'Specialized in tropical fruits and organic produce sourced across Northern Uganda.',
     image: 'https://images.unsplash.com/photo-1530836369250-ef72a3649cda?w=400&h=300&fit=crop',
   },
   {
     id: 'african-coffee-traders',
     name: 'African Coffee Traders',
-    country: 'Ethiopia',
+    country: 'Kampala, Uganda',
     rating: 4.9,
     reviews: 134,
-    description: 'Direct source of premium coffee beans from Ethiopia, Kenya, and other African countries.',
+    description: 'Direct source of premium coffee beans from Uganda’s central and eastern coffee regions.',
     image: 'https://images.unsplash.com/photo-1559702285-d28991ba7ee7?w=400&h=300&fit=crop',
   },
   {
     id: 'farmtech-solutions',
     name: 'FarmTech Solutions',
-    country: 'Germany',
+    country: 'Jinja, Uganda',
     rating: 4.7,
     reviews: 178,
-    description: 'Leading provider of agricultural machinery, tools, and technology solutions for modern farming.',
+    description: 'Provider of agricultural machinery and modern farming technology solutions in Uganda.',
     image: 'https://images.unsplash.com/photo-1552664065-5696bb2200f7?w=400&h=300&fit=crop',
   },
 ]
@@ -50,18 +50,27 @@ export function FeaturedSuppliersSection() {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
+
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-foreground mb-3">Featured Suppliers</h2>
+          <h2 className="text-3xl font-bold text-foreground mb-3">
+            Featured Suppliers in Uganda
+          </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Connect with our trusted suppliers offering high-quality products and excellent service
+            Connect with verified Ugandan suppliers offering high-quality agricultural products and services
           </p>
         </div>
 
-        {/* Suppliers Grid */}
+        {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
           {suppliers.map((supplier) => (
-            <Card key={supplier.id} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+            <Card
+              key={supplier.id}
+              className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col"
+            >
+
+              {/* Image */}
               <div className="relative w-full h-40 bg-muted">
                 <Image
                   src={supplier.image}
@@ -74,31 +83,49 @@ export function FeaturedSuppliersSection() {
                 </div>
               </div>
 
+              {/* Header */}
               <CardHeader className="flex-grow">
-                <h3 className="font-bold text-foreground mb-2">{supplier.name}</h3>
+                <h3 className="font-bold text-foreground mb-2">
+                  {supplier.name}
+                </h3>
+
                 <div className="flex items-center gap-1 text-sm text-muted-foreground mb-2">
                   <MapPin className="w-4 h-4" />
                   {supplier.country}
                 </div>
+
+                {/* Rating */}
                 <div className="flex items-center gap-2">
                   <div className="flex gap-1">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className={`w-4 h-4 ${i < Math.floor(supplier.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground'
+                        className={`w-4 h-4 ${i < Math.floor(supplier.rating)
+                            ? 'fill-yellow-400 text-yellow-400'
+                            : 'text-muted-foreground'
                           }`}
                       />
                     ))}
                   </div>
-                  <span className="text-sm font-semibold text-foreground">{supplier.rating}</span>
-                  <span className="text-xs text-muted-foreground">({supplier.reviews} reviews)</span>
+
+                  <span className="text-sm font-semibold text-foreground">
+                    {supplier.rating}
+                  </span>
+
+                  <span className="text-xs text-muted-foreground">
+                    ({supplier.reviews} reviews)
+                  </span>
                 </div>
               </CardHeader>
 
+              {/* Description */}
               <CardContent className="pb-4">
-                <p className="text-sm text-muted-foreground">{supplier.description}</p>
+                <p className="text-sm text-muted-foreground">
+                  {supplier.description}
+                </p>
               </CardContent>
 
+              {/* Action */}
               <CardFooter>
                 <Link href={`/suppliers/${supplier.id}`} className="w-full">
                   <Button className="w-full bg-primary hover:bg-primary/90" size="sm">
@@ -107,16 +134,21 @@ export function FeaturedSuppliersSection() {
                   </Button>
                 </Link>
               </CardFooter>
+
             </Card>
           ))}
+
         </div>
 
-        {/* View All Button */}
+        {/* View All */}
         <div className="text-center">
           <Link href="/suppliers">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white">View All Suppliers</Button>
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+              View All Suppliers
+            </Button>
           </Link>
         </div>
+
       </div>
     </section>
   )
