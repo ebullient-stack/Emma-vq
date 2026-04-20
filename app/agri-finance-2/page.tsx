@@ -13,7 +13,7 @@ const governmentPrograms = [
     description: 'Government-backed loans for farm development and modernization',
     details: [
       { label: 'Interest Rate', value: '2.5% - 4.0%' },
-      { label: 'Funding Amount', value: '$50,000 - $2,000,000' },
+      { label: 'Funding Amount', value: 'UGX50,000 - UGX2,000,000' },
       { label: 'Term Length', value: '5 - 25 years' },
       { label: 'Application Deadline', value: 'Quarterly cycles' },
     ],

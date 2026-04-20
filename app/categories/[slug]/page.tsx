@@ -18,7 +18,7 @@ const productCategories = {
         name: 'Fresh Organic Apples',
         supplier: 'Global Harvest Co.',
         supplierId: 'global-harvest',
-        price: '$4.50/kg',
+        price: 'UGX5,500/kg',
         rating: 4.8,
         reviews: 45,
         image: 'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=400&h=300&fit=crop',
@@ -29,7 +29,7 @@ const productCategories = {
         name: 'Organic Avocados',
         supplier: 'Tropical Exports Ltd.',
         supplierId: 'tropical-exports',
-        price: '$8.50/kg',
+        price: 'UGX2,000/kg',
         rating: 4.9,
         reviews: 67,
         image: 'https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=400&h=300&fit=crop',
@@ -40,7 +40,7 @@ const productCategories = {
         name: 'Premium Tomatoes',
         supplier: 'Fresh Produce Co.',
         supplierId: 'fresh-produce',
-        price: '$3.20/kg',
+        price: 'UGX4,200/kg',
         rating: 4.7,
         reviews: 38,
         image: 'https://images.unsplash.com/photo-1592841494611-63a3e4a0f89e?w=400&h=300&fit=crop',
@@ -51,7 +51,7 @@ const productCategories = {
         name: 'Organic Lettuce Mix',
         supplier: 'Global Harvest Co.',
         supplierId: 'global-harvest',
-        price: '$2.80/kg',
+        price: 'UGX3,000/kg',
         rating: 4.6,
         reviews: 29,
         image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop',
@@ -68,7 +68,7 @@ const productCategories = {
         name: 'Arabica Coffee Beans',
         supplier: 'African Coffee Traders',
         supplierId: 'african-coffee-traders',
-        price: '$15.50/kg',
+        price: 'UGX 9,800.50/kg',
         rating: 4.9,
         reviews: 156,
         image: 'https://images.unsplash.com/photo-1559702285-d28991ba7ee7?w=400&h=300&fit=crop',
@@ -79,7 +79,7 @@ const productCategories = {
         name: 'Robusta Coffee Beans',
         supplier: 'African Coffee Traders',
         supplierId: 'african-coffee-traders',
-        price: '$12.00/kg',
+        price: 'UGX9,200.00/kg',
         rating: 4.8,
         reviews: 89,
         image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b3f4?w=400&h=300&fit=crop',
@@ -90,7 +90,7 @@ const productCategories = {
         name: 'Black Tea Premium',
         supplier: 'Tea Plantations Ltd.',
         supplierId: 'tea-plantations',
-        price: '$6.50/kg',
+        price: 'UGX7,600/kg',
         rating: 4.7,
         reviews: 42,
         image: 'https://images.unsplash.com/photo-1597318086827-ffb008efc2f0?w=400&h=300&fit=crop',
@@ -338,11 +338,10 @@ export default function CategoryPage() {
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className={`w-3 h-3 ${
-                          i < Math.floor(product.rating)
+                        className={`w-3 h-3 ${i < Math.floor(product.rating)
                             ? 'fill-yellow-400 text-yellow-400'
                             : 'text-gray-300'
-                        }`}
+                          }`}
                       />
                     ))}
                     <span className="text-xs text-muted-foreground ml-1">
