@@ -1,12 +1,17 @@
 import { Wrench, Truck, Package, Beaker, Warehouse } from 'lucide-react'
 
+type Price = {
+  amount: number
+  currency: 'UGX'
+  unit: 'ton'
+}
+
 export const products = [
   {
     id: '1',
     name: 'Organic Rice',
-    category: 'Grains',
-    price: 450,
-    currency: 'USD/ton',
+    category: 'Grains & Cereals',
+    price: { amount: 1710000, currency: 'UGX', unit: 'ton' },
     supplier: 'Happy Farms India',
     image: 'https://images.unsplash.com/photo-1586985289688-ca3bab4d4e66?w=400&h=300&fit=crop',
     origin: 'India',
@@ -17,9 +22,8 @@ export const products = [
   {
     id: '2',
     name: 'Premium Wheat',
-    category: 'Grains',
-    price: 380,
-    currency: 'USD/ton',
+    category: 'Grains & Cereals',
+    price: { amount: 1444000, currency: 'UGX', unit: 'ton' },
     supplier: 'Golden Harvest',
     image: 'https://images.unsplash.com/photo-1537521403529-c0beaf3d3601?w=400&h=300&fit=crop',
     origin: 'Ukraine',
@@ -30,9 +34,8 @@ export const products = [
   {
     id: '3',
     name: 'Fresh Tomatoes',
-    category: 'Vegetables',
-    price: 650,
-    currency: 'USD/ton',
+    category: 'Fruits & Vegetables',
+    price: { amount: 2470000, currency: 'UGX', unit: 'ton' },
     supplier: 'Fresh Valley',
     image: 'https://images.unsplash.com/photo-1592921870789-04563e271b1b?w=400&h=300&fit=crop',
     origin: 'Turkey',
@@ -43,9 +46,8 @@ export const products = [
   {
     id: '4',
     name: 'Cocoa Beans',
-    category: 'Cash Crops',
-    price: 2800,
-    currency: 'USD/ton',
+    category: 'Coffee & Tea',
+    price: { amount: 10640000, currency: 'UGX', unit: 'ton' },
     supplier: 'Ivory Coast Exports',
     image: 'https://images.unsplash.com/photo-1599599810694-b308ca884cb9?w=400&h=300&fit=crop',
     origin: 'Ivory Coast',
@@ -56,9 +58,8 @@ export const products = [
   {
     id: '5',
     name: 'Corn (Maize)',
-    category: 'Grains',
-    price: 420,
-    currency: 'USD/ton',
+    category: 'Grains & Cereals',
+    price: { amount: 1596000, currency: 'UGX', unit: 'ton' },
     supplier: 'Midwest Grains',
     image: 'https://images.unsplash.com/photo-1585074294335-493dba05bd13?w=400&h=300&fit=crop',
     origin: 'USA',
@@ -69,9 +70,8 @@ export const products = [
   {
     id: '6',
     name: 'Coffee Beans',
-    category: 'Cash Crops',
-    price: 3200,
-    currency: 'USD/ton',
+    category: 'Coffee & Tea',
+    price: { amount: 12160000, currency: 'UGX', unit: 'ton' },
     supplier: 'Colombian Roasts',
     image: 'https://images.unsplash.com/photo-1447933601403-0c6688bcf566?w=400&h=300&fit=crop',
     origin: 'Colombia',
@@ -82,9 +82,8 @@ export const products = [
   {
     id: '7',
     name: 'Sweet Potatoes',
-    category: 'Vegetables',
-    price: 720,
-    currency: 'USD/ton',
+    category: 'Fruits & Vegetables',
+    price: { amount: 2736000, currency: 'UGX', unit: 'ton' },
     supplier: 'Harvest Hills',
     image: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=300&fit=crop',
     origin: 'Vietnam',
@@ -95,9 +94,8 @@ export const products = [
   {
     id: '8',
     name: 'Soybeans',
-    category: 'Grains',
-    price: 550,
-    currency: 'USD/ton',
+    category: 'Grains & Cereals',
+    price: { amount: 2090000, currency: 'UGX', unit: 'ton' },
     supplier: 'Global AgriTrade',
     image: 'https://images.unsplash.com/photo-1560960999-a8d5cf09eb29?w=400&h=300&fit=crop',
     origin: 'Brazil',
@@ -171,7 +169,7 @@ export const marketData = [
     id: '1',
     commodity: 'Wheat',
     region: 'North America',
-    price: 280,
+    price: 1064000,
     change24h: 2.5,
     volume: 5000,
     trend: 'up' as const,
@@ -180,7 +178,7 @@ export const marketData = [
     id: '2',
     commodity: 'Corn',
     region: 'North America',
-    price: 210,
+    price: 798000,
     change24h: -1.2,
     volume: 8000,
     trend: 'down' as const,
@@ -189,7 +187,7 @@ export const marketData = [
     id: '3',
     commodity: 'Soybeans',
     region: 'South America',
-    price: 340,
+    price: 1292000,
     change24h: 3.8,
     volume: 4500,
     trend: 'up' as const,
@@ -198,7 +196,7 @@ export const marketData = [
     id: '4',
     commodity: 'Rice',
     region: 'Asia',
-    price: 420,
+    price: 1596000,
     change24h: 1.5,
     volume: 6000,
     trend: 'up' as const,
@@ -207,7 +205,7 @@ export const marketData = [
     id: '5',
     commodity: 'Wheat',
     region: 'Europe',
-    price: 300,
+    price: 1140000,
     change24h: 0.8,
     volume: 3500,
     trend: 'up' as const,
@@ -215,58 +213,20 @@ export const marketData = [
 ]
 
 export const priceHistory = [
-  { date: 'Jan 1', price: 280 },
-  { date: 'Jan 8', price: 285 },
-  { date: 'Jan 15', price: 282 },
-  { date: 'Jan 22', price: 290 },
-  { date: 'Jan 29', price: 295 },
-  { date: 'Feb 5', price: 288 },
-  { date: 'Feb 12', price: 292 },
-  { date: 'Feb 19', price: 298 },
-  { date: 'Feb 26', price: 305 },
-  { date: 'Mar 5', price: 312 },
+  { date: 'Jan 1', price: 1064000 },
+  { date: 'Jan 8', price: 1083000 },
+  { date: 'Jan 15', price: 1071600 },
+  { date: 'Jan 22', price: 1102000 },
+  { date: 'Jan 29', price: 1121000 },
+  { date: 'Feb 5', price: 1094400 },
+  { date: 'Feb 12', price: 1109600 },
+  { date: 'Feb 19', price: 1132400 },
+  { date: 'Feb 26', price: 1159000 },
+  { date: 'Mar 5', price: 1185600 },
 ]
 
 export const categories = [
-  { id: 'grains', name: 'Grains', icon: '🌾', count: 1250 },
-  { id: 'vegetables', name: 'Vegetables', icon: '🥬', count: 890 },
-  { id: 'fruits', name: 'Fruits', icon: '🍎', count: 654 },
-  { id: 'spices', name: 'Spices', icon: '🌶️', count: 432 },
-  { id: 'cashcrops', name: 'Cash Crops', icon: '☕', count: 298 },
-  { id: 'seeds', name: 'Seeds', icon: '🌱', count: 567 },
-]
-
-export const insights = [
-  {
-    id: '1',
-    title: 'Global Wheat Shortage Drives Prices Up',
-    description: 'Recent weather patterns in major wheat producing regions are expected to reduce yields by 15-20% this season.',
-    category: 'Market Analysis',
-    trend: 'up' as const,
-    percentage: 18,
-  },
-  {
-    id: '2',
-    title: 'Organic Produce Demand Surges in Europe',
-    description: 'European retailers report 35% increase in organic vegetable orders, driven by growing consumer health consciousness.',
-    category: 'Trends',
-    trend: 'up' as const,
-    percentage: 35,
-  },
-  {
-    id: '3',
-    title: 'Asian Market Expansion',
-    description: 'Asian buyers are actively seeking new suppliers for diverse agricultural products.',
-    category: 'Trade News',
-    trend: 'up' as const,
-    percentage: 22,
-  },
-  {
-    id: '4',
-    title: 'Sustainable Farming Certifications in Demand',
-    description: 'Buyers increasingly require sustainability certifications, creating new standards across the supply chain.',
-    category: 'Sustainability',
-    trend: 'up' as const,
-    percentage: 12,
-  },
+  { id: 'grains-cereals', name: 'Grains & Cereals', icon: '🌾', count: 1250 },
+  { id: 'fruits-vegetables', name: 'Fruits & Vegetables', icon: '🥬', count: 890 },
+  { id: 'coffee-tea', name: 'Coffee & Tea', icon: '☕', count: 298 },
 ]
