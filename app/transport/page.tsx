@@ -9,10 +9,25 @@ import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
+type Price = {
+  amount: number
+  currency: 'UGX'
+}
+
+const formatPrice = (price: Price) => {
+  return new Intl.NumberFormat('en-UG', {
+    style: 'currency',
+    currency: price.currency,
+    maximumFractionDigits: 0,
+  }).format(price.amount)
+}
+
+const slugify = (value: string) =>
+  value.toLowerCase().replace(/\s+/g, '-')
+
 export default function TransportPage() {
   const router = useRouter()
 
-  // USER INPUT FILTERS
   const [filters, setFilters] = useState({
     vehicleType: 'All Types',
     priceRange: 1000000,
@@ -22,9 +37,7 @@ export default function TransportPage() {
     withDriver: false,
   })
 
-  // APPLIED FILTERS
   const [appliedFilters, setAppliedFilters] = useState(filters)
-
   const [searchTerm, setSearchTerm] = useState('')
   const [sortBy, setSortBy] = useState('Newest First')
 
@@ -33,14 +46,13 @@ export default function TransportPage() {
       id: 1,
       title: 'Livestock Transport Trailer',
       type: 'Livestock',
-      price: 450000,
+      price: { amount: 450000, currency: 'UGX' },
       available: true,
       driver: false,
       location: 'Australia',
       capacity: 'Up to 20 cattle or 80 sheep',
       description: 'Specialized trailer designed for safe livestock transport.',
-      image:
-        'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7',
+      image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7',
       features: ['Ventilation', 'Water System', 'Safe Loading'],
       supplier: 'Premium Transport Co.',
       supplierId: 'premium-transport',
@@ -50,14 +62,13 @@ export default function TransportPage() {
       id: 2,
       title: 'Grain Hopper Truck - 15 Ton',
       type: 'Hopper',
-      price: 750000,
+      price: { amount: 750000, currency: 'UGX' },
       available: true,
       driver: true,
       location: 'Canada',
       capacity: '15 tons',
       description: 'Efficient grain transport truck with hydraulic hopper.',
-      image:
-        'https://images.unsplash.com/photo-1563720223185-11003d516935',
+      image: 'https://images.unsplash.com/photo-1563720223185-11003d516935',
       features: ['Hydraulic Hopper', 'GPS Tracking', 'Insurance'],
       supplier: 'Logistics Express',
       supplierId: 'logistics-express',
@@ -67,14 +78,13 @@ export default function TransportPage() {
       id: 3,
       title: 'Tanker Truck - 8000 Liters',
       type: 'Tanker',
-      price: 656250,
+      price: { amount: 656250, currency: 'UGX' },
       available: true,
       driver: true,
       location: 'France',
       capacity: '8,000 liters',
       description: 'Insulated tanker for transporting liquids.',
-      image:
-        'https://images.unsplash.com/photo-1581093458791-9d15482442f1',
+      image: 'https://images.unsplash.com/photo-1581093458791-9d15482442f1',
       features: ['Temperature Control', 'Safety Certified', 'Documentation'],
       supplier: 'AgriHaul Services',
       supplierId: 'agrihaul-services',
@@ -84,14 +94,13 @@ export default function TransportPage() {
       id: 4,
       title: 'Heavy Duty Flatbed Truck',
       type: 'Flatbed',
-      price: 580000,
+      price: { amount: 580000, currency: 'UGX' },
       available: true,
       driver: false,
       location: 'Germany',
       capacity: '20 tons',
       description: 'Flatbed truck for transporting heavy machinery.',
-      image:
-        'https://images.unsplash.com/photo-1503376780353-7e6692767b70',
+      image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70',
       features: ['Heavy Duty', 'Tie-down Points', 'Wide Platform'],
       supplier: 'EuroFarm Logistics',
       supplierId: 'eurofarm-logistics',
@@ -99,26 +108,30 @@ export default function TransportPage() {
     },
   ]
 
-  // APPLY FILTERS BUTTON
   const applyFilters = () => {
     setAppliedFilters(filters)
   }
 
-  // BOOK NOW → SUPPLIER CONTACT PAGE
   const handleBookNow = (supplierId: string, vehicleTitle: string) => {
-    const slug = vehicleTitle.replace(/\s+/g, '-').toLowerCase()
-    router.push(`/suppliers/${supplierId}?vehicle=${slug}`)
+    router.push({
+      pathname: `/suppliers/${supplierId}`,
+      query: { vehicle: slugify(vehicleTitle) },
+    })
   }
 
   const handleRequestQuote = (supplierId: string, vehicleTitle: string) => {
-    const slug = vehicleTitle.replace(/\s+/g, '-').toLowerCase()
-    router.push(`/quote?supplier=${supplierId}&vehicle=${slug}`)
+    router.push({
+      pathname: '/quote',
+      query: {
+        supplier: supplierId,
+        vehicle: slugify(vehicleTitle),
+      },
+    })
   }
 
   const processedVehicles = useMemo(() => {
     let result = [...vehicles]
 
-    // SEARCH
     if (searchTerm) {
       result = result.filter(
         (v) =>
@@ -127,44 +140,38 @@ export default function TransportPage() {
       )
     }
 
-    // VEHICLE TYPE
     if (appliedFilters.vehicleType !== 'All Types') {
       result = result.filter((v) => v.type === appliedFilters.vehicleType)
     }
 
-    // PRICE
-    result = result.filter((v) => v.price <= appliedFilters.priceRange)
+    result = result.filter(
+      (v) => v.price.amount <= appliedFilters.priceRange
+    )
 
-    // LOCATION
     if (appliedFilters.location) {
       result = result.filter((v) =>
-        v.location
-          .toLowerCase()
-          .includes(appliedFilters.location.toLowerCase())
+        v.location.toLowerCase().includes(appliedFilters.location.toLowerCase())
       )
     }
 
-    // AVAILABLE NOW
     if (appliedFilters.availableNow) {
       result = result.filter((v) => v.available)
     }
 
-    // DRIVER FILTER
     if (appliedFilters.withDriver) {
       result = result.filter((v) => v.driver)
     }
 
-    // SORTING
     if (sortBy === 'Price: Low to High') {
-      result.sort((a, b) => a.price - b.price)
+      result.sort((a, b) => a.price.amount - b.price.amount)
     }
 
     if (sortBy === 'Price: High to Low') {
-      result.sort((a, b) => b.price - a.price)
+      result.sort((a, b) => b.price.amount - a.price.amount)
     }
 
     return result
-  }, [vehicles, appliedFilters, searchTerm, sortBy])
+  }, [appliedFilters, searchTerm, sortBy])
 
   return (
     <>
@@ -193,20 +200,16 @@ export default function TransportPage() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
             {/* FILTER SIDEBAR */}
-
             <div className="lg:col-span-1">
               <Card className="sticky top-20">
                 <CardContent className="p-6 space-y-6">
 
                   <h3 className="font-semibold">Filters</h3>
 
-                  {/* VEHICLE TYPE */}
-
                   <div>
                     <label className="text-sm font-semibold mb-2 block">
                       Vehicle Type
                     </label>
-
                     <select
                       value={filters.vehicleType}
                       onChange={(e) =>
@@ -221,8 +224,6 @@ export default function TransportPage() {
                       <option>Flatbed</option>
                     </select>
                   </div>
-
-                  {/* PRICE RANGE */}
 
                   <div>
                     <label className="text-sm font-semibold block mb-2">
@@ -244,14 +245,11 @@ export default function TransportPage() {
                     />
 
                     <p className="text-sm mt-2">
-                      USh 0 – USh {filters.priceRange.toLocaleString()}
+                      UGX 0 – UGX {filters.priceRange.toLocaleString()}
                     </p>
                   </div>
 
-                  {/* AVAILABILITY */}
-
                   <div className="space-y-2">
-
                     <label className="flex gap-2 text-sm">
                       <input
                         type="checkbox"
@@ -279,16 +277,12 @@ export default function TransportPage() {
                       />
                       With Driver
                     </label>
-
                   </div>
-
-                  {/* PICKUP LOCATION */}
 
                   <div>
                     <label className="text-sm font-semibold block mb-2">
                       Pickup Location
                     </label>
-
                     <input
                       type="text"
                       value={filters.location}
@@ -299,13 +293,10 @@ export default function TransportPage() {
                     />
                   </div>
 
-                  {/* RENTAL DATE */}
-
                   <div>
                     <label className="text-sm font-semibold block mb-2">
                       Rental Date
                     </label>
-
                     <input
                       type="date"
                       value={filters.rentalDate}
@@ -315,8 +306,6 @@ export default function TransportPage() {
                       className="w-full border rounded-lg px-3 py-2"
                     />
                   </div>
-
-                  {/* APPLY FILTER BUTTON */}
 
                   <Button
                     onClick={applyFilters}
@@ -330,11 +319,9 @@ export default function TransportPage() {
             </div>
 
             {/* RESULTS */}
-
             <div className="lg:col-span-3 space-y-6">
 
               <div className="flex gap-4">
-
                 <input
                   type="text"
                   placeholder="Search vehicles..."
@@ -352,30 +339,25 @@ export default function TransportPage() {
                   <option>Price: Low to High</option>
                   <option>Price: High to Low</option>
                 </select>
-
               </div>
 
               {processedVehicles.map((vehicle) => (
-
                 <Card key={vehicle.id} className="hover:shadow-lg transition">
-
                   <CardContent className="p-0">
 
                     <div className="grid md:grid-cols-3 gap-6 p-6">
 
                       <div className="relative h-48 rounded-lg overflow-hidden">
-
                         <Image
                           src={vehicle.image}
                           alt={vehicle.title}
                           fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
                           className="object-cover"
                         />
-
                         <div className="absolute top-3 right-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full">
                           {vehicle.available ? 'Available' : 'Unavailable'}
                         </div>
-
                       </div>
 
                       <div className="md:col-span-2">
@@ -412,12 +394,11 @@ export default function TransportPage() {
                             </p>
 
                             <p className="text-2xl font-bold text-primary">
-                              USh {vehicle.price.toLocaleString()}/day
+                              {formatPrice(vehicle.price)}/day
                             </p>
                           </div>
 
                           <div className="flex gap-2">
-
                             <Button
                               variant="outline"
                               onClick={() =>
@@ -441,7 +422,6 @@ export default function TransportPage() {
                             >
                               Book Now
                             </Button>
-
                           </div>
 
                         </div>
@@ -451,9 +431,7 @@ export default function TransportPage() {
                     </div>
 
                   </CardContent>
-
                 </Card>
-
               ))}
 
             </div>
