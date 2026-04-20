@@ -27,25 +27,28 @@ const products = [
     id: 1,
     name: 'Maize and Livestock',
     count: '7+ products',
-    price: 'USh 6750000.00',
+    price: 'USh 6,750,000',
     image: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=300&fit=crop',
   },
   {
     id: 2,
     name: 'Holstein Dairy Cows',
-    price: 'USh 8250000.00',
+    count: 'Available',
+    price: 'USh 8,250,000',
     image: 'https://images.unsplash.com/photo-1552525881-721f78ad2d7b?w=400&h=300&fit=crop',
   },
   {
     id: 3,
     name: 'Angus Beef Cattle',
-    price: 'USh 1312500.00',
+    count: 'Available',
+    price: 'USh 1,312,500',
     image: 'https://images.unsplash.com/photo-1555081732-14653e6b9ed4?w=400&h=300&fit=crop',
   },
   {
     id: 4,
     name: 'Merino Sheep',
-    price: 'USh 1312500.00',
+    count: 'Available',
+    price: 'USh 1,312,500',
     image: 'https://images.unsplash.com/photo-1500595046891-0573ffd4c5a5?w=400&h=300&fit=crop',
   },
 ]
@@ -73,11 +76,10 @@ export function ExploreCategoriesSection() {
             >
               <button
                 onClick={() => setActiveCategory(category.slug)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  activeCategory === category.slug
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === category.slug
                     ? 'bg-primary text-white'
                     : 'bg-muted text-foreground hover:bg-muted/80'
-                }`}
+                  }`}
               >
                 {category.name}
               </button>
@@ -99,7 +101,9 @@ export function ExploreCategoriesSection() {
               </div>
               <CardHeader className="flex-grow">
                 <h3 className="font-semibold text-foreground">{product.name}</h3>
-                {product.count && <p className="text-sm text-muted-foreground">{product.count}</p>}
+                {product.count && (
+                  <p className="text-sm text-muted-foreground">{product.count}</p>
+                )}
               </CardHeader>
               <CardContent className="pb-2">
                 <p className="text-primary font-semibold">{product.price}</p>
