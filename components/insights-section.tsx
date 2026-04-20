@@ -10,7 +10,8 @@ const agriculturalHighlights = [
     icon: Coffee,
     title: 'Coffee Production',
     regions: 'Ethiopia, Kenya, Uganda',
-    description: 'East Africa produces some of the world\'s finest Arabica and Robusta coffee varieties, with Ethiopia being the birthplace of coffee.',
+    description:
+      "East Africa produces some of the world's finest Arabica and Robusta coffee varieties, with Ethiopia being the birthplace of coffee.",
     tag: 'High Growth Potential',
     tagColor: 'bg-green-100 text-green-700',
   },
@@ -18,7 +19,8 @@ const agriculturalHighlights = [
     icon: Leaf,
     title: 'Tea Exports',
     regions: 'Kenya, Rwanda, Tanzania',
-    description: 'Kenya is the world\'s largest exporter of black tea, with Rwanda and Tanzania also producing high-quality tea varieties.',
+    description:
+      'Kenya is the world’s largest exporter of black tea, with Rwanda and Tanzania also producing high-quality tea varieties.',
     tag: 'Stable Market',
     tagColor: 'bg-blue-100 text-blue-700',
   },
@@ -26,7 +28,8 @@ const agriculturalHighlights = [
     icon: Flower,
     title: 'Floriculture',
     regions: 'Kenya, Ethiopia, Uganda',
-    description: 'Kenya and Ethiopia are leading global exporters of cut flowers, particularly roses, carnations, and summer flowers.',
+    description:
+      'Kenya and Ethiopia are leading global exporters of cut flowers, particularly roses, carnations, and summer flowers.',
     tag: 'Export Leader',
     tagColor: 'bg-amber-100 text-amber-700',
   },
@@ -34,7 +37,8 @@ const agriculturalHighlights = [
     icon: Sprout,
     title: 'Organic Farming',
     regions: 'Uganda, Tanzania, Rwanda',
-    description: 'Uganda is Africa\'s largest organic farming country, with Tanzania and Rwanda also seeing significant growth in organic production.',
+    description:
+      "Uganda is Africa's largest organic farming country, with Tanzania and Rwanda also seeing significant growth in organic production.",
     tag: 'Emerging Trend',
     tagColor: 'bg-purple-100 text-purple-700',
   },
@@ -47,8 +51,12 @@ export function InsightsSection() {
         <div className="space-y-8">
           {/* Header */}
           <div>
-            <h2 className="text-3xl font-bold text-foreground mb-2">East African Agricultural Highlights</h2>
-            <p className="text-muted-foreground">Key insights and opportunities in the region</p>
+            <h2 className="text-3xl font-bold text-foreground mb-2">
+              East African Agricultural Highlights
+            </h2>
+            <p className="text-muted-foreground">
+              Key insights and opportunities in the region
+            </p>
           </div>
 
           {/* Insights Grid */}
@@ -56,7 +64,10 @@ export function InsightsSection() {
             {agriculturalHighlights.map((highlight, index) => {
               const Icon = highlight.icon
               return (
-                <Card key={index} className="hover:shadow-md transition-shadow overflow-hidden">
+                <Card
+                  key={index}
+                  className="hover:shadow-md transition-shadow overflow-hidden"
+                >
                   <CardHeader className="pb-4">
                     <div className="flex items-start justify-between mb-3">
                       <div className="p-3 bg-muted rounded-lg">
@@ -68,11 +79,17 @@ export function InsightsSection() {
                         {highlight.tag}
                       </span>
                     </div>
-                    <CardTitle className="text-xl">{highlight.title}</CardTitle>
-                    <p className="text-sm text-muted-foreground font-medium">{highlight.regions}</p>
+                    <CardTitle className="text-xl">
+                      {highlight.title}
+                    </CardTitle>
+                    <p className="text-sm text-muted-foreground font-medium">
+                      {highlight.regions}
+                    </p>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">{highlight.description}</p>
+                    <p className="text-muted-foreground">
+                      {highlight.description}
+                    </p>
                   </CardContent>
                 </Card>
               )
