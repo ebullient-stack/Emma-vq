@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { MapPin, Zap, Check } from 'lucide-react'
+import { MapPin, Check } from 'lucide-react'
 
 const services = [
   {
@@ -12,7 +12,7 @@ const services = [
     region: 'East Africa',
     description: 'Rent tractors, harvesters, planters, and other farming equipment',
     count: '150+ items',
-    priceRange: '$50-500/day',
+    priceRange: 'USh 180,000 - 1,800,000/day',
     keyFeatures: ['GPS tracking', 'Insurance covered', 'Operator included', '24/7 support'],
     popular: true,
     icon: '🚜',
@@ -23,7 +23,7 @@ const services = [
     region: 'East Africa',
     description: 'Professional farming tools, irrigation systems, and specialized equipment',
     count: '300+ items',
-    priceRange: '$10-200/day',
+    priceRange: 'USh 36,000 - 720,000/day',
     keyFeatures: ['Quality assured', 'Flexible rental', 'Training included', 'Local pickup'],
     popular: false,
     icon: '🔧',
@@ -34,8 +34,8 @@ const services = [
     region: 'East Africa',
     description: 'Rent agricultural land, greenhouses, and farming facilities',
     count: '80+ listings',
-    priceRange: '$100-2000/month',
-    keyFeatures: ['Soil tested', 'Read connectivity', 'Water access', 'Legal support'],
+    priceRange: 'USh 360,000 - 7,200,000/month',
+    keyFeatures: ['Soil tested', 'Road connectivity', 'Water access', 'Legal support'],
     popular: true,
     icon: '🌾',
   },
@@ -45,7 +45,7 @@ const services = [
     region: 'East Africa',
     description: 'Hire skilled agricultural workers and farming specialists',
     count: '500+ workers',
-    priceRange: '$20-100/day',
+    priceRange: 'USh 72,000 - 360,000/day',
     keyFeatures: ['Verified profiles', 'Background checked', 'Skill ratings', 'Insurance covered'],
     popular: false,
     icon: '👨‍🌾',
@@ -56,7 +56,7 @@ const services = [
     region: 'East Africa',
     description: 'Trucks, trailers, and logistics services for agricultural products',
     count: '120+ vehicles',
-    priceRange: '$80-400/day',
+    priceRange: 'USh 288,000 - 1,440,000/day',
     keyFeatures: ['Temperature controlled', 'GPS tracking', 'Licensed drivers', 'Cargo insurance'],
     popular: false,
     icon: '🚚',
@@ -155,7 +155,7 @@ export function HireServicesSection() {
             <Link href="/contact">
               <Button className="bg-white text-blue-600 hover:bg-blue-50">Contact Us</Button>
             </Link>
-            <Link href="post-ad">
+            <Link href="/post-ad">
               <Button variant="outline" className="border-white text-white hover:bg-blue-700">
                 List Your Equipment
               </Button>
@@ -171,7 +171,7 @@ export function HireServicesSection() {
             <Link href="/signup">
               <Button className="bg-blue-600 hover:bg-blue-700 text-white">Get Started</Button>
             </Link>
-            <Link href="post-ad">
+            <Link href="/post-ad">
               <Button className="bg-green-500 hover:bg-green-600 text-white">Post Your Ad</Button>
             </Link>
           </div>
