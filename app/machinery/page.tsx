@@ -78,7 +78,7 @@ export default function MachineryPage() {
                   </div>
 
                   <div className="text-xs text-muted-foreground">
-                    UGX 0 - UGX {priceRange.toLocaleString()}
+                    UGX 70000 - UGX {priceRange.toLocaleString()}
                   </div>
                 </div>
 
