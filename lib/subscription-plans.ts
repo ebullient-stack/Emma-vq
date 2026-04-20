@@ -4,27 +4,27 @@ export const subscriptionPlans = {
   daily: {
     id: 'daily',
     name: 'Daily Plan',
-    price: 2.99,
-    currency: 'USD',
+    price: 500,
+    currency: 'UGX',
     interval: 'day',
-    displayPrice: '$2.99 / day',
+    displayPrice: 'UGX500 / day',
   },
 
   weekly: {
     id: 'weekly',
     name: 'Weekly Plan',
-    price: 9.99,
-    currency: 'USD',
+    price: 3500,
+    currency: 'UGX',
     interval: 'week',
-    displayPrice: '$9.99 / week',
+    displayPrice: 'UGX3500 / week',
   },
 
   monthly: {
     id: 'monthly',
     name: 'Monthly Plan',
-    price: 19.99,
-    currency: 'USD',
+    price: 10000,
+    currency: 'UGX',
     interval: 'month',
-    displayPrice: '$19.99 / month',
+    displayPrice: 'UGX10000 / month',
   },
 }
